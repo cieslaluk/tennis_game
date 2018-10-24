@@ -1,7 +1,23 @@
+
 let canvas;
 let canvasContext;
 let ballPosX = 50;
+let ballPosY = 50;
 let ballSpeedX = 10;
+let ballSpeedY = 5;
+let paddlePlayerY = 250;
+const paddleHeight = 100;
+
+function calculateMousePos(evt){
+    let rect = canvas.getBoundingClientRect();
+    let root = document.documentElement;
+    let mouseX = evt.clientX - rect.left - root.scrollLeft;
+    let mouseY = evt.clientY - rect.top - root.scrollTop;
+    return{
+        x:mouseX,
+        y:mouseY
+    }
+}
 
 window.onload = function() {
     canvas = document.getElementById('game');
@@ -12,6 +28,12 @@ window.onload = function() {
         drawAll();
         moveAll()
     }, 1000/framesPerSec);
+
+    canvas.addEventListener('mousemove', 
+    function(evt){
+        let mousePos = calculateMousePos(evt);
+        paddlePlayerY = mousePos.y;
+    });
 };   
 
 function moveAll(){
@@ -22,12 +44,26 @@ function moveAll(){
     if(ballPosX < 0){
         ballSpeedX = -ballSpeedX;
     };
+
+    ballPosY = ballPosY + ballSpeedY;
+    if(ballPosY > canvas.height){
+        ballSpeedY = -ballSpeedY;
+    };
+    if(ballPosY < 0){
+        ballSpeedY = -ballSpeedY;
+    };
+
+
 };
 
 function drawAll() {
+
     colorRect(0, 0, canvas.width, canvas.height, 'black');
-    colorRect(20, 210, 10, 100, 'white');
-    colorCircle(ballPosX, 150, 10, 'white');
+
+    colorRect(20, paddlePlayerY, 10, 100, 'white');
+
+    colorCircle(ballPosX, ballPosY, 10, 'white');
+
     
 };
 
