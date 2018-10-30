@@ -22,8 +22,8 @@ function calculateMousePos(evt){
     return{
         x:mouseX,
         y:mouseY
-    }
-}
+    };
+};
 
 window.onload = function() {
     canvas = document.getElementById('game');
@@ -33,7 +33,7 @@ window.onload = function() {
     let framesPerSec = 60;
     setInterval(function(){
         drawAll();
-        moveAll()
+        moveAll();
     }, 1000/framesPerSec);
 
     canvas.addEventListener('mousemove', 
@@ -52,7 +52,7 @@ function ballReset(){
     ballSpeedX = -ballSpeedX;
     ballPosX = canvas.width/2;
     ballPosY = canvas.height/2;
-}
+};
 
 function computerMovement(){
     let paddleComputerCenter = paddleComputerY + (paddleHeight/2); 
@@ -60,8 +60,8 @@ function computerMovement(){
         paddleComputerY += 7;
     } else if (paddleComputerCenter > ballPosY+35){
         paddleComputerY -= 7;
-    }
-} 
+    };
+};
 
 function moveAll(){
     if(showWinScreen){
@@ -111,7 +111,7 @@ function drawAll() {
         canvasContext.fillStyle = "white";
         canvasContext.fillText("Click to continue", 100, 100);
         return;
-    }
+    };
 
     colorRect(0, paddlePlayerY, paddleThickness, 100, 'white');
 
@@ -129,7 +129,7 @@ function colorCircle(centerX, centerY, radius, drawColor){
     canvasContext.beginPath();
     canvasContext.arc(centerX, centerY, radius, 0, Math.PI*2, true);
     canvasContext.fill();
-}
+};
 
 function colorRect(leftX, topY, width, height, drawColor){
     canvasContext.fillStyle = drawColor;
