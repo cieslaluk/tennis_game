@@ -28,7 +28,7 @@ function calculateMousePos(evt){
 window.onload = function() {
     canvas = document.getElementById('game');
     canvasContext = canvas.getContext('2d');
-    canvasContext.font ="50px Arial";
+    //canvasContext.font ="50px Arial";
 
     let framesPerSec = 60;
     setInterval(function(){
@@ -36,6 +36,14 @@ window.onload = function() {
         moveAll();
     }, 1000/framesPerSec);
 
+    canvas.addEventListener('mousedown', 
+    function(evt){
+        if(showWinScreen){
+            playerScore = 0;
+            computerScore = 0;
+            showWinScreen = false;
+        };
+    });
     canvas.addEventListener('mousemove', 
     function(evt){
         let mousePos = calculateMousePos(evt);
@@ -106,10 +114,15 @@ computerMovement();
 function drawAll() {
   
     colorRect(0, 0, canvas.width, canvas.height, 'black');
+    canvasContext.fillStyle = "white";
 
     if(showWinScreen){
-        canvasContext.fillStyle = "white";
-        canvasContext.fillText("Click to continue", 100, 100);
+        if(playerScore >= winningCondition){
+           canvasContext.fillText("Left player won!", 350, 100);
+        } else if(computerScore >= winningCondition){
+            canvasContext.fillText("Right player won!", 350, 100);  
+        }
+        canvasContext.fillText("Click to continue", 350, 200);        
         return;
     };
 
